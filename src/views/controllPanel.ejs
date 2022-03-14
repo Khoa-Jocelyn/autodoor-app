@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CONTROL PANEL</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div class="w3-navbar">
+      <a href="/home"><i class="fa fa-fw fa-home"></i>Home</a></a>
+      <a class="active" href="/controll-panel"><i class="fa fa-fw fa-wrench"></i>Controll panel</a>
+      <!-- <a href="/chart"><i class="fa fa-fw fa-bar-chart"></i>Biểu đồ</a> -->
+    </div>
+    <div class="container">
+      <div class="wrap-controll-panel">
+        <div class="wrap-controll-panel-contents">
+          <h2>CONTROL PANEL</h2>
+          <hr>
+          <div>
+            <label class="switch">
+              <input
+                type="checkbox"
+                id="manualMode"
+                name="manualMode"
+                disabled="true"
+              />
+              <span class="slider"></span>
+            </label>
+            <label>MANUAl MODE</label>
+          </div>
+          <hr>
+          <div>
+            <label class="switch">
+              <input
+                type="checkbox"
+                id="autoMode"
+                name="autoMode"
+                disabled="true"
+              />
+              <span class="slider"></span>
+            </label>
+            <label for="">AUTO MODE</label>
+          </div>
+          <hr>
+          <div>
+            <label class="switch">
+              <input
+                type="checkbox"
+                id="faceRecognitionMode"
+                name="faceRecognitionMode"
+              />
+              <span class="slider"></span>
+            </label>
+            <label for="">FACE RECOGNITION MODE</label>
+          </div>
+          <hr>
+          <div class="content-door-status">
+            <label for="">Door status:</label>
+            <span id="door_status">Closed!</span>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var autoMode = document.getElementById("autoMode");
+      var manualMode = document.getElementById("manualMode");
+      var faceRecognitionMode = document.getElementById("faceRecognitionMode");
+      var doorStatus = document.getElementById("door_status");
+      var database = document.getElementById("database");
+      var time = document.getElementById("time");
+
+      var url = "autodoor.herokuapp.com"; // hàm trả về url của trang hiện tại kèm theo port
+      var ws = new WebSocket("wss://" + url); // mở 1 websocket với port 3000
+      ws.onopen =
+        function () //khi websocket được mở thì hàm này sẽ được thưc hiện
+        {
+          manualMode.disabled = false; //khi websocket được mở, mới cho phép
+          ws.send(JSON.stringify({
+          status: "Connected",
+          pathname: "/controll-panel"
+        }));
+        };
+
+      ws.onclose = function () {
+        manualMode.disabled = true;
+        autoMode.disabled = true;
+        faceRecognitionMode.disabled = true;
+        alert("Server destroyed!");
+      };
+
+      function blobToString(b) {
+        var u, x;
+        u = URL.createObjectURL(b);
+        x = new XMLHttpRequest();
+        x.open("GET", u, false);
+        x.send();
+        URL.revokeObjectURL(u);
+        return x.responseText;
+      }
+
+      ws.onmessage = function (
+        e // sự kiện xảy ra khi client nhận dữ liệu từ server
+      ) {
+        if (blobToString(e.data) == "open successfully") {
+          doorStatus.innerHTML = "Open successfully!";
+        } else if (blobToString(e.data) == "close successfully") {
+          doorStatus.innerHTML = "Close successfully!";
+        } else if (blobToString(e.data) == "open error") {
+          doorStatus.innerHTML = "Open error!";
+        } else if (blobToString(e.data) == "close error") {
+          doorStatus.innerHTML = "Close error!";
+        }
+      };
+
+      manualMode.onchange = function () {
+        if (manualMode.checked == true) {
+          ws.send("MANUAL_ON");
+          autoMode.disabled = true;
+          faceRecognitionMode = true;
+        } else {
+          ws.send("MANUAL_OFF");
+          autoMode.disabled = false;
+          faceRecognitionMode = false;
+        }
+      };
+      autoMode.onchange = function () {
+        if (autoMode.checked == true) {
+          ws.send("AUTO_ON");
+          manualMode.disabled = true;
+          faceRecognitionMode = true;
+        } else {
+          ws.send("AUTO_OFF");
+          manualMode.disabled = false;
+          faceRecognitionMode = false;
+        }
+      };
+      faceRecognitionMode.onchange = function () {
+        if (faceRecognitionMode.checked == true) {
+          ws.send("FACE_RECOGNITION_ON");
+          manualMode.disabled = true;
+          autoMode.disabled = true;
+        } else {
+          ws.send("FACE_RECOGNITION_OFF");
+          manualMode.disabled = false;
+          autoMode.disabled = false;
+        }
+      };
+    </script>
+  </body>
+</html>
