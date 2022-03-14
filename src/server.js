@@ -53,7 +53,6 @@ ws.on('connection', function (socket, req, res) {
 
         console.log('Message: %s', message);
 
-
     });
 
     socket.on('close', function () {
