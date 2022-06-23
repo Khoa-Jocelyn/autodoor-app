@@ -1,0 +1,292 @@
+<head>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="/css/controll.css" />
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/input.css" />
+  <link rel="stylesheet" href="/css/buttonmode.css" />
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+  <script src='/js/clock.js'></script>
+</head>
+
+<section id="sidebar"> 
+  <div class="white-label">
+  </div> 
+  <div id="sidebar-nav">   
+    <ul>
+      <!-- <li><a href="/home"><i class="fa fa-sitemap"></i> Home</a></li> -->
+      <li class="active" style=" text-align: left;"><a href="/controll-panel"><i class="fa fa-dashboard"></i> Controll Panel</a></li>
+      <li><a href="/sign-in" style=" text-align: left;"><i class="fa fa-pencil-square-o"></i> Sign in</a></li>
+      <li><a href="/user" style=" text-align: left;"><i class="fa fa-users"></i> Profile</a></li>
+      <li><a href="/user-management" style=" text-align: left;"><i class="fa fa-users"></i> Users Management</a></li>
+      <!-- <li><a href="#"><i class="fa fa-line-chart"></i> Reporting</a></li>
+      <li><a href="#"><i class="fa fa-comments-o"></i>Social Marketing</a></li>
+      <li><a href="#"><i class="fa fa-map-marker"></i> Get Traffic</a></li>      -->
+    </ul>
+  </div>
+</section>
+<section id="content">
+  <div id="header">
+    <div class="header-nav">
+      <div class="menu-button">
+        <!--<i class="fa fa-navicon"></i>-->
+      </div>
+      <div class="nav">
+        <ul>
+          <li class="nav-profile">
+            <div class="nav-profile-image">
+              <div class="nav-profile-name"><%= data1[0].tendaydu %><i class="fa fa-caret-down"></i></div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="content-header">
+      <h1>Controll Panel</h1>
+      <div class="clock">
+        <div class="bg">
+            <h2 id="h">12</h2>
+        </div>
+        <h2>:</h2>
+        <div class="bg">
+            <h2 id="m">20</h2>
+        </div>
+        <h2>:</h2>
+        <div class="bg">
+            <h2 id="s">00</h2>
+        </div>
+        <div class="bg">
+            <h2 id="ap">AM</h2>
+        </div>
+    </div>
+    </div>
+    <div class="widget-box sample-widget">
+      <div class="widget-header">
+        <h2>Autodoor Mode</h2>
+      </div>
+      <div class="container">
+        <div class="widget-content">
+          <div class="demo__content" style="float: left; margin-left: 15px;">
+            <label class="switcher">
+              <input type="checkbox" id="manualMode" name="manualMode"/>
+              <div class="switcher__indicator"></div><span>Manual Mode</span>
+            </label><br/><br/>
+            <label class="switcher">
+              <input type="checkbox" id="autoMode" name="autoMode"/>
+              <div class="switcher__indicator"></div><span>Auto Mode</span>
+            </label><br/><br/>
+            <label class="switcher">
+              <input type="checkbox" id="faceRecognitionMode" name="faceRecognitionMode"/>
+              <div class="switcher__indicator"></div><span>Face Recognition Mode</span>
+            </label>
+          </div>
+          <div id="setdatetime" hidden="false" name="setdatetime" style="float: right; padding: 3% 3% 3% 0%;">
+            <label for="date">Date</label>
+            <input type="date" id="getdate">
+            <br><br>
+            <label for="time">Time start</label>
+            <input type="time" id="gettimeopen" value="Time start" required>
+            <br><br>
+            <label for="time">Time end</label>
+            <input type="time" id="gettimeclose" value="Time end" required>
+            <!-- <span class="input">
+              <input type="date" id="getdate" placeholder="Date">
+              <br> 
+              <input type="time" id="gettimeopen" placeholder="Start">
+              <br>
+              <input type="time" id="gettimeclose" placeholder="End">
+            </span> -->
+            <br><br>
+            <input type="button" id="send" name="send" value="Set time"/>
+          </div>
+        </div>
+    </div>
+  </div>
+
+  <div class="widget-box sample-widget" style="width: 20%;">
+    <div class="widget-header">
+      <h2>Notification</h2>
+    </div>
+    <div class="widget-content" style="padding-top: 5%;">
+      <div class="content-door-status">
+        <label for="">Door status:</label>
+        <span id="door_status" style="color:green">Closed!</span>
+      </div>
+      <!-- <span id="icon_status"><i class='fas fa-exclamation-triangle' style='font-size:48px;color:red'></i></span> -->
+    </div>
+  </div>
+
+  <div class="widget-box sample-widget" style="width: 28%;">
+    <div class="widget-header">
+      <h2>Filter by time</h2>
+    </div>
+    <div class="widget-content">
+      <div style="text-align: center; padding: 5% 5%;">
+        <form action="/home-data" , method="post">
+          <span class="input">
+            <input type="date" name="date_start" placeholder="From">
+            <span></span> 
+            <br> <br>
+            <input type="date" name="date_end" placeholder="To">
+            <span></span> 
+          </span>
+          <br> <br>
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form>
+      </div>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <div>
+    <table class="w3-table-all w3-hoverable">
+      <thead>
+        <tr class="w3-light-gray">
+          <th>ID</th>
+          <th>Status</th>
+          <th>Time</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i=0; i < data.length; i++) { %>
+          <tr>
+            <td><%= data[i].id %></td>
+            <td><%= data[i].status %></td>
+            <td><%= data[i].timestatus.toLocaleString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh"}) %></td>
+            <td>
+              <form action="/delete-status" , method="post">
+                <input
+                  type="text"
+                  hidden
+                  value="<%= data[i].id %>"
+                  name="statusId"
+                />
+                <button type="submit" class="btn-CRUD">Delete</button>
+              </form>
+            </td>
+        </tr>
+        <% } %>
+      </tbody>
+  </div>
+</section>
+
+<script type="text/javascript">
+  var autoMode = document.getElementById("autoMode");
+  var manualMode = document.getElementById("manualMode");
+  var faceRecognitionMode = document.getElementById("faceRecognitionMode");
+  var doorStatus = document.getElementById("door_status");
+  var iconStatus = document.getElementById("icon_status");
+  var user_logged = document.getElementById("user_logged");
+  var timenow = document.getElementById("timenow");
+  var database = document.getElementById("database");
+  var gettimeopen = document.getElementById("gettimeopen");
+  var gettimeclose = document.getElementById("gettimeclose");
+  var getdate = document.getElementById("getdate");
+  var send = document.getElementById("send");
+  var setdatetime = document.getElementById("setdatetime");
+
+  var url = "ahkiot.herokuapp.com"; // hàm trả về url của trang hiện tại kèm theo port
+  var ws = new WebSocket("wss://" + url); // mở 1 websocket với port 3000
+  ws.onopen =
+    function () //khi websocket được mở thì hàm này sẽ được thưc hiện
+    {
+      manualMode.disabled = false; //khi websocket được mở, mới cho phép
+      // ws.send(JSON.stringify({
+      //   status: "Connected",
+      //   pathname: "/controll-panel"
+      // }));
+    };
+
+  ws.onclose = function () {
+    manualMode.disabled = true;
+    autoMode.disabled = true;
+    faceRecognitionMode.disabled = true;
+    alert("Server destroyed!");
+  };
+
+  function blobToString(b) {
+    var u, x;
+    u = URL.createObjectURL(b);
+    x = new XMLHttpRequest();
+    x.open("GET", u, false);
+    x.send();
+    URL.revokeObjectURL(u);
+    return x.responseText;
+  }
+
+  ws.onmessage = function (
+    e // sự kiện xảy ra khi client nhận dữ liệu từ server
+  ) {
+    if (blobToString(e.data) == "open successfully") {
+      doorStatus.innerHTML = "Open successfully!";
+    } else if (blobToString(e.data) == "close successfully") {
+      doorStatus.innerHTML = "Close successfully!";
+    } else if (blobToString(e.data) == "open error") {
+      doorStatus.innerHTML = "Open error!";
+    } else if (blobToString(e.data) == "close error") {
+      doorStatus.innerHTML = "Close error!";
+    } else if (blobToString(e.data) == "VuTuanHung" || (blobToString(e.data) == "DinhVanKhoa") || (blobToString(e.data) == "LeGiaAn")) {
+      var today = new Date();
+      var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+      user_logged.innerHTML = blobToString(e.data);
+      timenow.innerHTML = time;
+    }
+  };
+
+  manualMode.onchange = function () {
+    if (manualMode.checked == true) {
+      ws.send("MANUAL_ON");
+      autoMode.disabled = true;
+      faceRecognitionMode.disabled = true;
+      setdatetime.hidden = true;
+    } else {
+      ws.send("MANUAL_OFF");
+      autoMode.disabled = false;
+      faceRecognitionMode.disabled = false;
+      setdatetime.hidden = true;
+    }
+  };
+  autoMode.onchange = function () {
+    if (autoMode.checked == true) {
+      ws.send("AUTO_ON");
+      manualMode.disabled = true;
+      faceRecognitionMode.disabled = true;
+      setdatetime.hidden = true;
+    } else {
+      ws.send("AUTO_OFF");
+      manualMode.disabled = false;
+      faceRecognitionMode.disabled = false;
+      setdatetime.hidden = true;
+    }
+  };
+  faceRecognitionMode.onchange = function () {
+    if(faceRecognitionMode.checked == true) {
+      manualMode.disabled = true;
+      autoMode.disabled = true;
+      setdatetime.hidden = false;
+    } else {
+      ws.send("FACE_RECOGNITION_OFF");
+      manualMode.disabled = false;
+      autoMode.disabled = false;
+      setdatetime.hidden = true;
+    }
+  };
+  send.onclick = function () {   
+    clock = [getdate.value,gettimeopen.value,gettimeclose.value,"FACE_RECOGNITION_ON"]
+    ws.send(clock);
+    // ws.send("FACE_RECOGNITION_ON");
+  };
+
+  window.onbeforeunload = function() {
+    sessionStorage.setItem("manualMode", manualMode.value);
+    sessionStorage.setItem("autoMode", autoMode.value);
+    localStorage.setItem("faceRecognitionMode", faceRecognitionMode.value);
+    localStorage.setItem("gettime", gettime.value);
+    localStorage.setItem("getdate", getdate.value);
+  }
+</script>

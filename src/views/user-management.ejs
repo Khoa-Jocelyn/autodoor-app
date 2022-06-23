@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/profile.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <script src='/js/clock.js'></script>
+    <title>Users Management</title>
+  </head>
+  <body>
+    <div class="w3-navbar">
+        <div class="clock">
+            <div class="bg">
+                <h2 id="h">12</h2>
+            </div>
+            <h2>:</h2>
+            <div class="bg">
+                <h2 id="m">20</h2>
+            </div>
+            <h2>:</h2>
+            <div class="bg">
+                <h2 id="s">00</h2>
+            </div>
+            <div class="bg">
+                <h2 id="ap">AM</h2>
+            </div>
+        </div>
+        <a href="/controll-panel"><i class="fa fa-fw fa-wrench"></i>Controll panel</a>
+        <a href="/sign-in"><i class="fa fa-fw fa-bar-chart"></i>Sign in</a>
+        <a href="/user"><i class="fa fa-fw fa-bar-chart"></i>Profile</a>
+        <a class="active" href="/user-management"><i class="fa fa-fw fa-bar-chart"></i>Users Management</a>
+    </div>
+    <br> 
+    <div class="w3-navbar" style="background-color: #28223f; margin-left: 3.5%; width: 100%;">
+        <a href="/add-profile"><button id="add-user" class="msg-btn">Add User</button></a>
+        <a><form action="/export-csv" , method="get" >
+            <button type="submit" class="msg-btn">Export CSV</button>
+        </form></a>
+    </div>
+    <div style="text-align: center; padding-left:5%">
+        <% for(let i=0; i < data.length; i++) { %>
+            <div class="container" style="float: left; padding-right: 2%;">
+                <div class="cover-photo">
+                    <img src="https://images.unsplash.com/photo-1565464027194-7957a2295fb7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80" class="profile">
+                </div>
+                <div style="padding-right:2%;">
+                    <div class="profile-name"><%= data[i].tendaydu %></div>
+                    <p class="about">ID: <%= data[i].id %> <br> Username: <%= data[i].username %> <br> Email: <%= data[i].email %> <br> Gender: <%= data[i].gender %> <br> Age: <%= data[i].age %> <br> <br>
+
+                    <form action="/delete-user" , method="post">
+                        <input type="text" hidden value="<%= data[i].id %>" name="userId"/>
+                        <button type="submit" class="msg-btn">Delete</button>
+                    </form>
+                    <div>
+                        <i class="fab fa-facebook-f"></i>
+                        <i class="fab fa-instagram"></i>
+                        <i class="fab fa-youtube"></i>
+                        <i class="fab fa-twitter"></i>
+                    </div>
+                </div>
+            </div>
+        <% } %> 
+    </div>
+  </body>
+</html>

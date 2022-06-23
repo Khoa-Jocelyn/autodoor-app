@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Home</title>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script> -->
+    <!-- <script src="../configs/connectDB.js"></script> -->
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script> -->
+    <meta charset="utf-8" />
+    <script src='/js/clock.js'></script>
+  </head>
+  <body>
+    <script src="//connect.facebook.net/en_US/sdk.js"></script>
+
+    <div class="w3-navbar">
+      <div class="clock">
+        <div class="bg">
+            <h2 id="h">12</h2>
+        </div>
+        <h2>:</h2>
+        <div class="bg">
+            <h2 id="m">20</h2>
+        </div>
+        <h2>:</h2>
+        <div class="bg">
+            <h2 id="s">00</h2>
+        </div>
+        <div class="bg">
+            <h2 id="ap">AM</h2>
+        </div>
+    </div>
+      <a class="active" href="/home"><i class="fa fa-fw fa-home"></i>Home</a></a>
+      <a href="/controll-panel"><i class="fa fa-fw fa-wrench"></i>Controll panel</a>
+      <a href="/sign-in"><i class="fa fa-fw fa-bar-chart"></i>Sign in</a>
+      <a href="/user"><i class="fa fa-fw fa-bar-chart"></i>Profile</a>
+    </div>
+    
+    <div class="container">
+      <br><br>
+      <div style="text-align: center;">
+        <form action="/home-data" , method="post">
+          <div class="row">
+            <div class="col"><label for="date_start">From</label></div>
+            <div class="col"><input type="date" name="date_start"></label></div>  
+            <div class="w-100"></div>
+            <div class="col"><label for="date_end">to</label></div>
+            <div class="col"><input type="date" name="date_end"></label></div>  
+          </div>
+          <br>
+          <button type="submit" class="btn-CRUD">Search</button>
+        </form>
+      </div>
+      <br><br>
+      <div>
+        <table class="w3-table-all w3-hoverable">
+          <thead>
+            <tr class="w3-light-gray">
+              <th>ID</th>
+              <th>Status</th>
+              <th>Time</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% for(let i=0; i < data.length; i++) { %>
+              <tr>
+                <td><%= data[i].id %></td>
+                <td><%= data[i].status %></td>
+                <td><%= data[i].timestatus.toLocaleString("vi-VN", {timeZone: "Asia/Ho_Chi_Minh"}) %></td>
+                <td>
+                  <form action="/delete-status" , method="post">
+                    <input
+                      type="text"
+                      hidden
+                      value="<%= data[i].id %>"
+                      name="statusId"
+                    />
+                    <button type="submit" class="btn-CRUD">Delete</button>
+                  </form>
+                </td>
+            </tr>
+            <% } %>
+          </tbody>
+    </div>
+
+    <script type="text/javascript">
+      ws.onopen = function () 
+      {
+        // get_count();
+        // ws.send(JSON.stringify({
+        //   status: "Connected",
+        //   pathname: '/home'
+        // }));
+      };
+
+      ws.onclose = function () {
+        alert("Server destroyed!");
+      };
+    </script>
+  </body>
+</html>
